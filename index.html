@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michele Chini — Data Scientist & Statistician</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1a1a2e;
+            --ink-light: #3d3d5c;
+            --ink-muted: #6b6b8d;
+            --surface: #faf9f7;
+            --surface-warm: #f3f1ed;
+            --surface-card: #ffffff;
+            --accent: #2d5a7b;
+            --accent-deep: #1e3f56;
+            --accent-light: #e8f0f5;
+            --gold: #b8860b;
+            --gold-light: #fdf6e3;
+            --border: #e2e0db;
+            --border-light: #edecea;
+            --shadow-sm: 0 1px 3px rgba(26,26,46,0.06);
+            --shadow-md: 0 4px 16px rgba(26,26,46,0.08);
+            --shadow-lg: 0 8px 32px rgba(26,26,46,0.1);
+            --radius: 6px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--surface);
+            color: var(--ink);
+            font-size: 15px;
+            line-height: 1.7;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(250,249,247,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226,224,219,0.5);
+            transition: box-shadow 0.3s ease;
+        }
+        nav.scrolled { box-shadow: var(--shadow-sm); }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+        .nav-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.15rem;
+            color: var(--ink);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink-muted);
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--ink);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ── HERO ── */
+        .hero-wrapper {
+            position: relative;
+            min-height: 75vh;
+            display: flex;
+            align-items: flex-end;
+            background: url('https://images.unsplash.com/photo-1589802829985-817e51171b92?w=1920&q=80') center 40% / cover no-repeat;
+        }
+        .hero-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(250,249,247,0) 0%,
+                rgba(250,249,247,0.3) 30%,
+                rgba(250,249,247,0.75) 55%,
+                rgba(250,249,247,0.95) 75%,
+                rgba(250,249,247,1) 100%
+            );
+        }
+        .hero {
+            position: relative;
+            z-index: 1;
+            padding: 10rem 2rem 5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            width: 28px;
+            height: 1.5px;
+            background: var(--accent);
+        }
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            line-height: 1.15;
+            color: var(--ink);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .hero-description {
+            font-size: 1.05rem;
+            color: var(--ink-light);
+            max-width: 640px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+        .hero-meta {
+            margin-top: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .hero-meta a, .hero-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .hero-meta a:hover { color: var(--accent); }
+        .hero-meta svg { width: 16px; height: 16px; opacity: 0.6; }
+
+        /* ── SECTIONS ── */
+        section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        .section-header {
+            margin-bottom: 3rem;
+        }
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            color: var(--ink);
+            letter-spacing: -0.01em;
+        }
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            margin: 0 auto;
+            max-width: 1100px;
+        }
+
+        /* ── EXPERIENCE ── */
+        .timeline { position: relative; }
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 3rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .timeline-item:last-child { border-bottom: none; }
+        .timeline-date {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+            padding-top: 0.15rem;
+        }
+        .timeline-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.25rem;
+        }
+        .timeline-content .company {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+        .timeline-content p {
+            font-size: 0.9rem;
+            color: var(--ink-light);
+            line-height: 1.75;
+            margin-bottom: 0.5rem;
+        }
+        .timeline-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        .timeline-content li {
+            font-size: 0.9rem;
+            color: var(--ink-light);
+            line-height: 1.75;
+            padding-left: 1.25rem;
+            position: relative;
+            margin-bottom: 0.35rem;
+        }
+        .timeline-content li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.65em;
+            width: 5px;
+            height: 1.5px;
+            background: var(--accent);
+        }
+
+        /* ── SKILLS ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .skill-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .skill-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--border);
+        }
+        .skill-card h4 {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .skill-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--ink-light);
+            background: var(--surface-warm);
+            padding: 0.3rem 0.75rem;
+            border-radius: 3px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* ── REPOS ── */
+        .repos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+        .repo-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            text-decoration: none;
+            color: inherit;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeUp 0.5s ease forwards;
+        }
+        .repo-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .repo-card h3 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--accent-deep);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .repo-card h3 svg {
+            width: 16px;
+            height: 16px;
+            opacity: 0.5;
+            flex-shrink: 0;
+        }
+        .repo-card .repo-desc {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            line-height: 1.65;
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+        .repo-meta {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+        }
+        .repo-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .repo-loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            color: var(--ink-muted);
+            font-size: 0.9rem;
+        }
+        .repo-loading .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        /* ── EDUCATION ── */
+        .edu-item {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-light);
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .edu-item:last-child { border-bottom: none; }
+        .edu-date {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+            padding-top: 0.15rem;
+        }
+        .edu-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.2rem;
+        }
+        .edu-content .institution {
+            font-size: 0.88rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        .edu-content p {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            margin-top: 0.3rem;
+        }
+
+        /* ── PUBLICATIONS ── */
+        .pub-card {
+            background: var(--gold-light);
+            border: 1px solid #e8dfc0;
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .pub-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.4rem;
+            line-height: 1.5;
+        }
+        .pub-card p {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: var(--ink-muted);
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+        .footer-links { display: flex; gap: 1.5rem; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgba(250,249,247,0.98);
+                backdrop-filter: blur(12px);
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .hamburger { display: block; }
+            .hero-wrapper { min-height: 60vh; }
+            .hero { padding: 8rem 1.5rem 3rem; }
+            .hero h1 { font-size: 2rem; }
+            .timeline-item, .edu-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            section { padding: 3rem 1.5rem; }
+            .repos-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">M. Chini</a>
+        <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="https://github.com/michechi" target="_blank">GitHub ↗</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrapper">
+<header class="hero">
+    <div class="hero-eyebrow">Data Scientist & Statistician</div>
+    <h1>Michele Chini</h1>
+    <p class="hero-description">
+        Statistician with 4+ years in quantitative risk modeling and applied machine learning. 
+        Currently pursuing a Ph.D. in Statistics & AI at the University of Oslo while developing 
+        deep learning and LLM-based predictive models at NordicRWE.
+    </p>
+    <div class="hero-meta">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+            Oslo, Norway
+        </span>
+        <a href="mailto:michele.chini.it@gmail.com">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+            michele.chini.it@gmail.com
+        </a>
+        <a href="https://github.com/michechi" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            michechi
+        </a>
+        <a href="https://linkedin.com/in/michele-chini" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+        </a>
+    </div>
+</header>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="section-header reveal">
+        <div class="section-label">Career</div>
+        <h2 class="section-title">Work Experience</h2>
+    </div>
+    <div class="timeline">
+        <div class="timeline-item reveal">
+            <div class="timeline-date">Nov 2024 — Present</div>
+            <div class="timeline-content">
+                <h3>Data Scientist — R&D</h3>
+                <div class="company">NordicRWE (startup) · Oslo, Norway</div>
+                <ul>
+                    <li>Developing and benchmarking predictive models using fine-tuned LLMs with different training strategies across multiple model scales, plus RNNs and standard ML models on registry data</li>
+                    <li>Managing GPU compute budget, coordinating academic researchers and industry stakeholders, presenting to pharma partners (AstraZeneca, Johnson & Johnson)</li>
+                    <li>Built a custom agentic coding pipeline using locally-hosted LLMs for automated code generation and review</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item reveal">
+            <div class="timeline-date">Oct 2021 — Oct 2024</div>
+            <div class="timeline-content">
+                <h3>Risk Models Analytics — CRO Area</h3>
+                <div class="company">Intesa Sanpaolo · Turin, Italy</div>
+                <ul>
+                    <li>Owned the implementation and cloud deployment of the Credit Portfolio Model: rewrote the Monte Carlo simulation engine for VaR and Expected Shortfall in R on Google Cloud Platform</li>
+                    <li>Extended the framework to NPL, Pension Risk, and Real Estate models, covering the full scope of Pillar 2 economic capital computation</li>
+                    <li>Central point of contact for the CRO area's first AI initiatives: contributed to a RAG knowledge system and an LLM pipeline for regulatory report generation</li>
+                    <li>Promoted in under two years; recognized for cross-functional effectiveness</li>
+                </ul>
+            </div>
+        </div>
+        <div class="timeline-item reveal">
+            <div class="timeline-date">Nov 2021 — Dec 2022</div>
+            <div class="timeline-content">
+                <h3>Research Assistant (part-time)</h3>
+                <div class="company">Collegio Carlo Alberto · Turin, Italy</div>
+                <ul>
+                    <li>Co-founded DataLab: organized research databases, built Python prototypes for researchers' workflows, and trained Senior Researchers on Python</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="section-header reveal">
+        <div class="section-label">Toolkit</div>
+        <h2 class="section-title">Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+        <div class="skill-card reveal">
+            <h4>Languages & Frameworks</h4>
+            <div class="skill-tags">
+                <span class="skill-tag">R</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">LaTeX</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <h4>Python Ecosystem</h4>
+            <div class="skill-tags">
+                <span class="skill-tag">PyTorch</span>
+                <span class="skill-tag">Pandas</span>
+                <span class="skill-tag">Polars</span>
+                <span class="skill-tag">scikit-learn</span>
+                <span class="skill-tag">uv</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <h4>R Ecosystem</h4>
+            <div class="skill-tags">
+                <span class="skill-tag">tidyverse</span>
+                <span class="skill-tag">parallel</span>
+                <span class="skill-tag">R packages</span>
+                <span class="skill-tag">renv</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <h4>Cloud & DevOps</h4>
+            <div class="skill-tags">
+                <span class="skill-tag">GCP</span>
+                <span class="skill-tag">BigQuery</span>
+                <span class="skill-tag">Cloud Storage</span>
+                <span class="skill-tag">Git</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <h4>Domains</h4>
+            <div class="skill-tags">
+                <span class="skill-tag">Monte Carlo</span>
+                <span class="skill-tag">VaR / ES</span>
+                <span class="skill-tag">Deep Learning</span>
+                <span class="skill-tag">LLMs</span>
+                <span class="skill-tag">RAG</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <h4>Languages</h4>
+            <div class="skill-tags">
+                <span class="skill-tag">🇮🇹 Italian — Native</span>
+                <span class="skill-tag">🇬🇧 English — C1</span>
+                <span class="skill-tag">🇩🇪 German — A1</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PROJECTS / REPOS -->
+<section id="projects">
+    <div class="section-header reveal">
+        <div class="section-label">Open Source</div>
+        <h2 class="section-title">GitHub Projects</h2>
+    </div>
+    <div class="repos-grid" id="repos-container">
+        <div class="repo-loading">
+            <div class="spinner"></div>
+            Loading repositories from GitHub...
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+    <div class="section-header reveal">
+        <div class="section-label">Education</div>
+        <h2 class="section-title">Academic Background</h2>
+    </div>
+    <div>
+        <div class="edu-item reveal">
+            <div class="edu-date">2024 — Present</div>
+            <div class="edu-content">
+                <h3>Ph.D. in Statistics and Artificial Intelligence</h3>
+                <div class="institution">University of Oslo — Integreat, NORA.AI</div>
+            </div>
+        </div>
+        <div class="edu-item reveal">
+            <div class="edu-date">2018 — 2021</div>
+            <div class="edu-content">
+                <h3>M.Sc. in Mathematics — Stochastics and Data Science</h3>
+                <div class="institution">University of Torino · Erasmus+: Ghent University</div>
+                <p>Thesis: "Stochastic Block Model for Community Detection: A Bayesian Nonparametric Approach" — 110/110 Cum Laude</p>
+            </div>
+        </div>
+        <div class="edu-item reveal">
+            <div class="edu-date">2014 — 2018</div>
+            <div class="edu-content">
+                <h3>B.Sc. in Statistics for Technology and Sciences</h3>
+                <div class="institution">University of Padova</div>
+                <p>103/110</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+    <div class="section-header reveal">
+        <div class="section-label">Research</div>
+        <h2 class="section-title">Publications</h2>
+    </div>
+    <div class="pub-card reveal">
+        <h3>Do Large Language Models Detect and Exploit Decisive Sequential Information?</h3>
+        <p>M. Chini et al. — Preprint, submitted to ICML 2026. Available on GitHub.</p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <span>© 2026 Michele Chini</span>
+    <div class="footer-links">
+        <a href="mailto:michele.chini.it@gmail.com">Email</a>
+        <a href="https://github.com/michechi" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/michele-chini" target="_blank">LinkedIn</a>
+    </div>
+</footer>
+
+<script>
+    // ── NAV SCROLL ──
+    window.addEventListener('scroll', () => {
+        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ── CLOSE MOBILE MENU ON LINK CLICK ──
+    document.querySelectorAll('.nav-links a').forEach(a => {
+        a.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.remove('open');
+        });
+    });
+
+    // ── SCROLL REVEAL ──
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── GITHUB REPOS ──
+    const GITHUB_USER = 'michechi';
+    const LANG_COLORS = {
+        'Python': '#3572A5', 'R': '#198CE7', 'JavaScript': '#f1e05a',
+        'TypeScript': '#3178c6', 'HTML': '#e34c26', 'CSS': '#563d7c',
+        'Jupyter Notebook': '#DA5B0B', 'Shell': '#89e051', 'TeX': '#3D6117',
+        'C++': '#f34b7d', 'C': '#555555', 'Java': '#b07219', 'Rust': '#dea584',
+    };
+
+    async function loadRepos() {
+        const container = document.getElementById('repos-container');
+        try {
+            const response = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=30&type=owner`);
+            if (!response.ok) throw new Error('GitHub API error');
+            let repos = await response.json();
+
+            // Filter out forks and sort by stars then updated
+            repos = repos
+                .filter(r => !r.fork)
+                .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at));
+
+            if (repos.length === 0) {
+                container.innerHTML = '<p class="repo-loading">No public repositories found.</p>';
+                return;
+            }
+
+            container.innerHTML = repos.map((repo, i) => `
+                <a href="${repo.html_url}" target="_blank" class="repo-card" style="animation-delay: ${i * 0.08}s">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/>
+                        </svg>
+                        ${repo.name}
+                    </h3>
+                    <div class="repo-desc">${repo.description || 'No description available.'}</div>
+                    <div class="repo-meta">
+                        ${repo.language ? `<span><span class="lang-dot" style="background:${LANG_COLORS[repo.language] || '#999'}"></span>${repo.language}</span>` : ''}
+                        ${repo.stargazers_count > 0 ? `<span>★ ${repo.stargazers_count}</span>` : ''}
+                        ${repo.forks_count > 0 ? `<span>⑂ ${repo.forks_count}</span>` : ''}
+                    </div>
+                </a>
+            `).join('');
+
+        } catch (error) {
+            container.innerHTML = `
+                <div class="repo-loading">
+                    Unable to load repositories. 
+                    <br><a href="https://github.com/${GITHUB_USER}" target="_blank" style="color:var(--accent)">View on GitHub →</a>
+                </div>`;
+        }
+    }
+
+    loadRepos();
+</script>
+
+</body>
+</html>
